@@ -1,0 +1,45 @@
+type Article {
+  id: String!
+  url: String!
+  title: String!
+  content: String!
+  date: String!
+  createdAt: String!
+  parentArticleId: String!
+  parentArticle: ParentArticle!
+}
+
+type ParentArticle {
+  id: String!
+  title: String!
+  summary: String
+  slug: String!
+  imageUrl: String
+  createdAt: String!
+  updatedAt: String!
+  articles: [Article!]!
+}
+
+
+extend type Query {
+  articles: [Article!]!
+  article(id: String!): Article
+  parentArticles: [ParentArticle!]!
+  parentArticle(id: String!): ParentArticle   
+}
+
+extend type Mutation {
+  createArticle(
+    url: String!
+    title: String!
+    content: String!
+    date: String!
+  ): Article!
+  createParentArticle(
+    title: String!
+    summary: String
+    slug: String!
+    imageUrl: String
+  ): ParentArticle!
+}
+
