@@ -1,0 +1,65 @@
+type Article {
+  id: String!
+  url: String!
+  title: String!
+  content: String!
+  date: String!
+  createdAt: String!
+  parentArticleId: String!
+  parentArticle: ParentArticle!
+}
+
+type ParentArticle {
+  id: String!
+  title: String!
+  summary: String
+  slug: String!
+  imageUrl: String
+  createdAt: String!
+  updatedAt: String!
+  articles: [Article!]!
+  xPosts: [XPost!]!
+}
+
+#if you have posts around an article, aimed at true understanding
+#what do people really think
+#you could start thinking about giving weight to users
+#like one thing you could add to you Attention.py script is adding weight to users
+type XPost{
+  id: String!
+  username: String!
+  content: String!
+  createdAt: String!
+  parentArticleId: String!
+  parentArticle: ParentArticle!
+}
+
+
+extend type Query {
+  articles: [Article!]!
+  article(id: String!): Article
+  parentArticles: [ParentArticle!]!
+  parentArticle(id: String!): ParentArticle   
+}
+
+extend type Mutation {
+  createArticle(
+    url: String!
+    title: String!
+    content: String!
+    date: String!
+  ): Article!
+  createParentArticle(
+    title: String!
+    summary: String
+    slug: String!
+    imageUrl: String
+  ): ParentArticle!
+  createXPost(
+    username: String!
+    content: String!
+    createdAt: String!
+    parentArticleId: String!
+  ): XPost!
+}
+
